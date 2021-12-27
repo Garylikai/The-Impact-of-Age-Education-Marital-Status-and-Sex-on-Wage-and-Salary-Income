@@ -1,0 +1,71 @@
+\section{Mathematical Proof and Verification}\label{appendix:math}
+\subsection{The OLS Estimator of $\pmb{\hat{\beta}}$}
+\label{appendix:ols}
+
+In this appendix, we introduce the basic mathematics to obtain a formula for the \acs{OLS} estimators $\hat{\beta_{i}}$ in \acs{MLR}. We reach the goal through minimizing the \hyperref[appendix:notations]{\text{RSS}}, given $Y_i$ and $\hat{Y_i}$ in Equation (\ref{eq:mlr_srf}). \ie\,We take partial derivatives of \hyperref[appendix:notations]{\text{RSS}} with respect to each $\hat{\beta_{i}}$, set those derivatives equal to zero, and solve for $\hat{\beta_{i}}$s:
+\[
+\frac{\partial RSS}{\partial \hat{\beta_{0}}} = 0 \quad
+\frac{\partial RSS}{\partial \hat{\beta_{1}}} = 0 \quad
+\dotsm \quad
+\frac{\partial RSS}{\partial \hat{\beta_{k}}} = 0
+\]
+
+To show the properties of this system of linear equations, let us check the equation for $\hat{\beta_{0}}$:
+\[
+\frac{\partial RSS}{\partial \hat{\beta_{0}}}=(-2)\sum \big[\,Y_{i}-(\,\hat{\beta_{0}}+\hat{\beta_{1}}X_{1i}+\dots+\hat{\beta_{n}}X_{ki}\,)\,\big]=0
+\]
+
+\ie 
+$$n\hat{\beta_{0}}+\big(\sum X_{1i}\big)\hat{\beta_{1}}+\big(\sum X_{2i}\big)\hat{\beta_{2}}+\dots+\big(\sum X_{ki}\big)\hat{\beta_{k}}=\sum Y_{i}$$
+
+Similarly, we get a system of linear equations for other $\hat{\beta_{i}}$s:
+\begin{equation}\label{eq:ols_sol}
+\begin{aligned}
+\big(\sum X_{1i}\big)\hat{\beta_{0}}+\big(\sum X_{1i}^2\big)\hat{\beta_{1}}+\big(\sum X_{1i}X_{2i}\big)\hat{\beta_{2}}+\dots+\big(\sum X_{1i}X_{ki}\big)\hat{\beta_{k}}&=\sum X_{1i}Y_{i}
+\\
+\big(\sum X_{2i}\big)\hat{\beta_{0}}+\big(\sum X_{1i}X_{2i}\big)\hat{\beta_{1}}+\big(\sum X_{2i}^2\big)\hat{\beta_{2}}+\dots+\big(\sum X_{2i}X_{ki}\big)\hat{\beta_{k}}&=\sum X_{2i}Y_{i}
+\\
+\vdotswithin{=}
+\\
+\big(\sum X_{ki}\big)\hat{\beta_{0}}+\big(\sum X_{1i}X_{ki}\big)\hat{\beta_{1}}+\big(\sum X_{2i}X_{ki}\big)\hat{\beta_{2}}+\dots+\big(\sum X_{ki}^2\big)\hat{\beta_{k}}&=\sum X_{ki}Y_{i}
+\end{aligned} 
+\end{equation}
+
+
+A simple way to solve Equations (\ref{eq:ols_sol}) is by expressing them in matrix form. Before moving forward, it is essential to know the matrix representation of our \acs{PRF} in Equation (\ref{eq:mlr_prf}):
+\begin{equation}\label{eq:ols_mat}
+\pmb{Y} = \pmb{X}\pmb{\beta}+\pmb{\epsilon}\eqcomma
+\end{equation}
+where
+\[
+\pmb{Y}=\begin{pmatrix}
+y_{1}\\y_{2}\\y_{3}\\\vdots\\y_{n}
+\end{pmatrix}
+\quad
+\pmb{X}=\begin{pmatrix}
+1 & x_{11} & x_{21} & \dots & x_{k1}\\
+1 & x_{12} & x_{22} & \dots & x_{k2}\\
+1 & x_{13} & x_{23} & \dots & x_{k3}\\
+\vdots & \vdots & \vdots & \ddots & \vdots\\
+1 & x_{1n} & x_{2n} & \dots & x_{kn}\\
+\end{pmatrix}
+\quad
+\pmb{\beta}=\begin{pmatrix}
+\beta_{0}\\\beta_{1}\\\beta_{2}\\\vdots\\\beta_{k}
+\end{pmatrix}
+\quad
+\pmb{\epsilon}=\begin{pmatrix}
+\epsilon_{1}\\\epsilon_{2}\\\epsilon_{3}\\\vdots\\\epsilon_{n}
+\end{pmatrix}
+\]
+
+
+Thus, by similar transformation, the system of linear Equations (\ref{eq:ols_sol}) can be written as:
+\begin{equation}\label{eq:ols_sol2}
+(\pmb{X}^T\pmb{X})\pmb{\hat{\beta}}=\pmb{X}^T\pmb{Y}
+\end{equation}
+
+Thus, the solutions of ${\hat{\beta_{i}}}$ in Equation (\ref{eq:ols_sol2}) can be obtained if $\pmb{X}^T\pmb{X}$ is invertible\footnote{In linear algebra, an $n$-by-$n$ matrix $\pmb{A}$ is called invertible if there exists an $n$-by-$n$ matrix $\pmb{B}$ such that $\pmb{AB}=\pmb{BA}=\pmb{I_{n}}$, where $\pmb{I_{n}}$ is $n$-by-$n$ identity matrix. We say that $\pmb{B}$ is the inverse of $\pmb{A}$, denoted by $\pmb{A^{-1}}$.}:
+\begin{equation}\label{eq:ols_sol3}
+\pmb{\hat{\beta}}=(\pmb{X}^T\pmb{X})^{-1}\pmb{X}^T\pmb{Y}
+\end{equation}
